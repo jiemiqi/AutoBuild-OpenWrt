@@ -62,9 +62,9 @@ jobs:
       #  git clone "your_github_link" package/"your_folder_name"      
 
     - name: Import external feeds - JerryKuKu Argon
-     working-directory: ./openwrt
-     run: |
-       git clone https://github.com/jerrykuku/luci-theme-argon.git
+      working-directory: ./openwrt
+      run: |
+        git clone https://github.com/jerrykuku/luci-theme-argon.git
 
     - name: Configuration Customization - Build_x86_64
       env:
