@@ -21,7 +21,7 @@ jobs:
       uses: actions/checkout@master
     - name: Setup Debug Session
       uses: csexton/debugger-action@master
-      
+
     - name: Initialization environment
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -74,7 +74,12 @@ jobs:
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x ./customize.sh && ./customize.sh
-        cd openwrt && make defconfig
+        cd openwrt
+        sed -i "s/^ROOTFS_PARTSIZE=.*/ROOTFS_PARTSIZE=512/" target/linux/x86/image/Makefile
+        echo "CONFIG_TARGET_ROOTFS_PARTSIZE=512" >> .config
+        echo "CONFIG_TARGET_IMAGES_EXT4FS=n" >> .config
+        echo "CONFIG_TARGET_IMAGES_SQUASHFS=y" >> .config
+        make defconfig
         
     - name: Download package
       working-directory: ./openwrt
